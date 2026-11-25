@@ -1,0 +1,2 @@
+# Proposed Checkpoint Delta — <WO ID>
+NOT PROMOTED. Base/head SHA and evidence paths; candidate completed scope; AC and test results; approved decisions unchanged; proposed decisions requiring ratification; blockers/residual risk; impacted canonical docs and precise edits; recommended next necessary WO only if auditor APPROVED. Auditor must validate before updating canonical checkpoint. No merge by executor.

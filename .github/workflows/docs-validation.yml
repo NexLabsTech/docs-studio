@@ -1,0 +1,31 @@
+name: Documentation CI
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: docs-validation-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  docs-validation:
+    name: docs-validation
+    if: github.repository == 'NexLabsTech/docs-studio' && github.event.repository.private == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout exact public commit without credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          git init -q .
+          git remote add origin https://github.com/NexLabsTech/docs-studio.git
+          git -c credential.helper= fetch --no-tags --depth=1 origin "$GITHUB_SHA"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+      - name: Validate canonical documentation and negative fixtures
+        run: python3 scripts/validate_docs.py --self-test
+      - name: Validate tracked repository
+        run: python3 scripts/validate_docs.py

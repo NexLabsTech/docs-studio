@@ -1,0 +1,3 @@
+# Context Lock — <WO ID>
+Timestamp UTC: TBD; remote/branch: TBD; base SHA: TBD; clean status: TBD.
+Record git ls-files / status and SHA256 for README, AGENTS, checkpoint, decisions, scope, DoD, architecture, requirements and WO; add other relevant sources. Record exact paths, hashes and versions. Distinguish approved base from candidate edits. Record permissions, cost boundary, toolchain and relevant environmental fingerprint. Before PR/evidence, compare against locked base and fresh remote when available. Any unexpected relevant drift -> STALE; stop, recompile/rebase under approval; never overwrite approved decisions. No tokens/secrets.
