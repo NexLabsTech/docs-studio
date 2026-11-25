@@ -1,0 +1,4 @@
+# Checkpoint
+Date: 2026-11-25. Status: PLANNING APPROVED / BOOTSTRAP PR CANDIDATE / EXECUTION NOT STARTED.
+Owner approved product/editorial baseline including future Instagram/TikTok and designated NexLabsTech/docs-studio. Source Check initial main: 4f2439bd0d9fe342ccd776d45f62cffc3a320dc6 (README only); public repo, admin/push permission verified. Bootstrap branch nds/bootstrap-001; issues #1–#9 created. This candidate does not attest to merge or CI.
+Next necessary increment: NDS-CORE-WO-001 only after docs-only baseline integrated and fresh Context Lock. All technical gates NOT_RUN: Windows inventory, license eligibility, actual Codex model/effort, plugin and ImageGen capability, disk/hardware benchmark, dependency pins, SQLite adapter, free CI. No installation, render, tests, release or monetization proven. Executor proposes delta only; auditor promotes after APPROVED. YouTube upload proposal #8 is future and does not modify approved manual publication.
