@@ -1,16 +1,16 @@
-# Checkpoint Delta proposto — NDS-CORE-WO-001
+# Checkpoint Delta proposto — NDS-CORE-WO-001/CD-01
 
 **Estado:** proposta para auditoria independente; não aplicada a `docs/12-checkpoint.md`.
 
 ## Estado-base confirmado
 
 - NDS-BOOTSTRAP-001/PF-01 permanece APPROVED e integrado pela PR #10 em `c2bb0211adaf953c12f75d18be343be03cce7e93`.
-- A `main` ainda aponta para esse SHA; o Context Lock fresco desta WO parte desse commit.
-- Evidência da qualificação publicada no commit `40ddb1e42da6eb675b6801721f8abc6191c49dfb`, PR draft #11. GitHub Actions run `45696205047` e os checks Socket preexistentes passaram nesse commit.
-- O checkpoint canônico ainda diz que a qualificação CORE local não foi executada. Esse registro permanece intacto até parecer independente.
+- PR #11 permanece draft, alvo `main`; o Context Lock fresco da CD-01 parte da base acima e do HEAD original `49097c6eac92709a53f82a5e4e117144c0a13c19`.
+- O comentário de auditoria #7174370671 foi lido integralmente e as correções F01–F04 foram implementadas/reexecutadas em `compatibility-corrections.md`, com Evidence Bundle em pt-BR.
+- O checkpoint canônico segue inalterado. Nenhuma aprovação independente foi inferida; NDS-MEDIA-WO-002 continua não iniciado.
 
-## Texto sugerido, condicionado à decisão do auditor
+## Texto sugerido, condicionado à decisão independente
 
-> NDS-CORE-WO-001: execução local Windows concluída no commit de qualificação `40ddb1e42da6eb675b6801721f8abc6191c49dfb`, Evidence Bundle na [PR draft #11](https://github.com/NexLabsTech/docs-studio/pull/11), GitHub Actions run `45696205047` SUCCESS no SHA exato. AC01–AC10 e limitações estão evidenciados. Estado sugerido: **evidência submetida, aguardando auditoria independente**. PF-01 continua APPROVED. Nenhuma aprovação, promoção, merge, implementação do produto, publicação ou início de NDS-MEDIA-WO-002 decorre deste texto.
+> NDS-CORE-WO-001/CD-01: correções para auditoria F01–F04 foram executadas na PR draft #11, branch `nds/core-wo-001`, sobre a base canônica `c2bb0211adaf953c12f75d18be343be03cce7e93`. Sandboxes/outputs exclusivos, testes de sentinel externo/reparse/traversal/overwrite, isolamento ambiental e encerramento de árvore passaram. Smokes reais de Kokoro/Whisper/SQLite, Remotion com ffprobe e FFmpeg/ffprobe passaram. Lockfiles foram validados sem reinstalação. Remotion 4.0.547 está qualificado gratuitamente para uso individual declarado. A origem/licença comercial da voz Kokoro `af_heart` permanece sem confirmação; `tts_models/en/ljspeech/vits` foi apenas proposto como candidato e não substituiu a arquitetura. Evidência submetida; auditoria independente pendente. Nenhuma alteração de checkpoint ou autorização de fase seguinte decorre deste Delta.
 
-O auditor independente deve substituir o estado sugerido por APPROVED, CORRECTION REQUIRED ou BLOCKED conforme o Work Order. Somente após parecer APPROVED e autorização aplicável outra pessoa pode atualizar o checkpoint canônico. Até lá, a fase seguinte continua sem autorização.
+O auditor pode decidir APPROVED, CORRECTION REQUIRED ou BLOCKED conforme o Work Order, considerando explicitamente o gate comercial de voz. Só após parecer independente APPROVED e autorização aplicável outra pessoa pode atualizar o checkpoint canônico. Até então: sem promoção, merge, produto, MEDIA ou publicação.

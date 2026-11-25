@@ -1,133 +1,48 @@
-param(
-  [Parameter(Mandatory=$true)][string]$OutputFile,
-  [string]$RuntimeRoot = (Join-Path $env:TEMP 'nds-core-wo-001-runtime')
-)
-
 $ErrorActionPreference = 'Stop'
-$project = Join-Path $PSScriptRoot '..\remotion'
+$module = Join-Path $PSScriptRoot 'QualificationSandbox.psm1'
+Import-Module $module -Force
+$qualificationRoot = Get-QualificationRoot
+$project = Join-Path $qualificationRoot 'remotion'
 $cli = Join-Path $project 'node_modules\@remotion\cli\remotion-cli.js'
-$env:TEMP = Join-Path $RuntimeRoot 'temp'
-$env:TMP = $env:TEMP
-$env:USERPROFILE = Join-Path $RuntimeRoot 'user-profile'
-$env:LOCALAPPDATA = Join-Path $RuntimeRoot 'user-profile\AppData\Local'
-$env:APPDATA = Join-Path $RuntimeRoot 'user-profile\AppData\Roaming'
-$env:npm_config_cache = Join-Path $RuntimeRoot 'npm-cache'
-New-Item -ItemType Directory -Force -Path $env:TEMP, $env:LOCALAPPDATA, $env:APPDATA | Out-Null
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $OutputFile) | Out-Null
-
-function Quote-WindowsArgument([string]$Value) {
-  if ($Value.Length -gt 0 -and $Value -notmatch '[\s"]') { return $Value }
-  $builder = New-Object System.Text.StringBuilder
-  [void]$builder.Append('"')
-  $slashes = 0
-  foreach ($character in $Value.ToCharArray()) {
-    if ($character -eq '\') { $slashes++; continue }
-    if ($character -eq '"') {
-      [void]$builder.Append(('\' * (($slashes * 2) + 1)))
-      [void]$builder.Append('"')
-    } else {
-      [void]$builder.Append(('\' * $slashes))
-      [void]$builder.Append($character)
-    }
-    $slashes = 0
-  }
-  [void]$builder.Append(('\' * ($slashes * 2)))
-  [void]$builder.Append('"')
-  return $builder.ToString()
+$node = (Get-Command node.exe -CommandType Application -ErrorAction Stop | Select-Object -First 1).Source
+$ffprobe = (Get-Command ffprobe -CommandType Application -ErrorAction Stop).Source
+if (-not [IO.File]::Exists($cli)) { throw 'Pinned Remotion CLI is missing from its isolated project.' }
+$sandbox = New-QualificationSandbox -Purpose 'remotion'
+$output = Get-SandboxOutputPath -Sandbox $sandbox -RelativePath 'render.mp4'
+$environment = New-QualificationEnvironment -Sandbox $sandbox
+$renderResult = Invoke-QualificationProcess -FilePath $node -ArgumentList @($cli,'render','src/index.jsx','nds-core-smoke',$output,'--codec=h264','--concurrency=1','--log=error') -WorkingDirectory $project -Sandbox $sandbox -Environment $environment -TimeoutSeconds 300
+if ($renderResult.timed_out) { throw 'Remotion exceeded the 300 second limit; its process tree was terminated.' }
+if ($renderResult.exit_code -ne 0) { throw "Remotion render failed with exit code $($renderResult.exit_code)." }
+if (-not [IO.File]::Exists($output)) { throw 'Remotion exited successfully without creating its output.' }
+$probeResult = Invoke-QualificationProcess -FilePath $ffprobe -ArgumentList @('-v','error','-count_frames','-select_streams','v:0','-show_entries','format=duration,size:stream=codec_name,width,height,r_frame_rate,nb_frames,nb_read_frames','-of','json',$output) -WorkingDirectory $project -Sandbox $sandbox -Environment $environment -TimeoutSeconds 30
+if ($probeResult.timed_out -or $probeResult.exit_code -ne 0) { throw 'ffprobe failed against the actual Remotion output.' }
+$probe = $probeResult.stdout | ConvertFrom-Json
+$video = @($probe.streams | Where-Object { $_.codec_name }) | Select-Object -First 1
+$duration = [double]$probe.format.duration
+$frames = [int]$video.nb_read_frames
+$file = Get-Item -LiteralPath $output
+if ($video.codec_name -ne 'h264' -or [int]$video.width -ne 1920 -or [int]$video.height -ne 1080 -or $video.r_frame_rate -ne '30/1' -or $frames -ne 300 -or [Math]::Abs($duration - 10.0) -gt 0.02 -or [int64]$probe.format.size -ne $file.Length) {
+  throw 'Real ffprobe assertions failed for codec, dimensions, frame rate, frame count, duration, or file size.'
 }
-
-function Get-ProcessTreeWorkingSetBytes([uint32]$RootProcessId) {
-  $processes = @(Get-CimInstance Win32_Process -Property ProcessId, ParentProcessId, WorkingSetSize)
-  $processIds = New-Object 'System.Collections.Generic.HashSet[uint32]'
-  [void]$processIds.Add($RootProcessId)
-  $changed = $true
-  while ($changed) {
-    $changed = $false
-    foreach ($candidate in $processes) {
-      if ($processIds.Contains([uint32]$candidate.ParentProcessId) -and $processIds.Add([uint32]$candidate.ProcessId)) {
-        $changed = $true
-      }
-    }
-  }
-  $total = 0L
-  foreach ($candidate in $processes) {
-    if ($processIds.Contains([uint32]$candidate.ProcessId)) { $total += [int64]$candidate.WorkingSetSize }
-  }
-  return $total
-}
-
-if (-not (Test-Path -LiteralPath $cli)) { throw 'Pinned Remotion CLI is missing from the isolated project.' }
-$node = (Get-Command node -ErrorAction Stop).Source
-$arguments = @(
-  $cli, 'render', 'src/index.jsx', 'nds-core-smoke', $OutputFile,
-  '--codec=h264', '--concurrency=1', '--overwrite', '--log=error'
-)
-$argumentLine = [string]::Join(' ', @($arguments | ForEach-Object { Quote-WindowsArgument ([string]$_) }))
-$startInfo = New-Object System.Diagnostics.ProcessStartInfo
-$startInfo.FileName = $node
-$startInfo.Arguments = $argumentLine
-$startInfo.WorkingDirectory = $project
-$startInfo.UseShellExecute = $false
-$startInfo.CreateNoWindow = $true
-$startInfo.RedirectStandardOutput = $true
-$startInfo.RedirectStandardError = $true
-$process = New-Object System.Diagnostics.Process
-$process.StartInfo = $startInfo
-$clock = [System.Diagnostics.Stopwatch]::StartNew()
-[void]$process.Start()
-$stdoutTask = $process.StandardOutput.ReadToEndAsync()
-$stderrTask = $process.StandardError.ReadToEndAsync()
-$peakWorkingSet = 0L
-$sampleCount = 0
-$lastSampleMilliseconds = 0.0
-$maxSampleIntervalMilliseconds = 0.0
-while (-not $process.HasExited) {
-  $now = $clock.Elapsed.TotalMilliseconds
-  if ($sampleCount -gt 0) {
-    $interval = $now - $lastSampleMilliseconds
-    if ($interval -gt $maxSampleIntervalMilliseconds) { $maxSampleIntervalMilliseconds = $interval }
-  }
-  $lastSampleMilliseconds = $now
-  $sample = Get-ProcessTreeWorkingSetBytes -RootProcessId ([uint32]$process.Id)
-  if ($sample -gt $peakWorkingSet) { $peakWorkingSet = $sample }
-  $sampleCount++
-  Start-Sleep -Milliseconds 250
-}
-$process.WaitForExit()
-$process.Refresh()
-$exitCode = $process.ExitCode
-if ($exitCode -ne 0) {
-  [Console]::Error.WriteLine($stderrTask.GetAwaiter().GetResult())
-  throw "Remotion render failed: $exitCode"
-}
-if (-not (Test-Path -LiteralPath $OutputFile)) { throw 'Remotion returned success but produced no output file.' }
-$file = Get-Item -LiteralPath $OutputFile
-$hash = (Get-FileHash -LiteralPath $OutputFile -Algorithm SHA256).Hash
-$clock.Stop()
-$result = [PSCustomObject]@{
-  mode = 'remotion-cli-render'
+$hash = (Get-FileHash -LiteralPath $output -Algorithm SHA256).Hash
+$evidence = [ordered]@{
+  command = 'node @remotion/cli/remotion-cli.js render; ffprobe -count_frames actual-output'
+  exit_code_render = $renderResult.exit_code
+  exit_code_ffprobe = $probeResult.exit_code
+  timeout_seconds_render = 300
+  timed_out = $false
   remotion_version = '4.0.547'
-  node_version = (node --version)
-  duration_s = 10
-  width = 1920
-  height = 1080
-  fps = 30
-  frames = 300
-  codec = 'h264'
-  concurrency = 1
-  elapsed_s = [math]::Round($clock.Elapsed.TotalSeconds, 3)
-  process_peak_working_set_bytes = $peakWorkingSet
-  process_sample_count = $sampleCount
-  process_sample_interval_max_ms = [math]::Round($maxSampleIntervalMilliseconds, 1)
-  memory_measurement = 'Windows process tree WorkingSetSize (WMI)'
+  output_file = 'render.mp4'
   output_bytes = $file.Length
   output_sha256 = $hash
-  exit_code = $exitCode
+  actual_ffprobe = $probe
+  assertions = [ordered]@{ codec_h264=($video.codec_name -eq 'h264'); width_1920=([int]$video.width -eq 1920); height_1080=([int]$video.height -eq 1080); fps_30=($video.r_frame_rate -eq '30/1'); frames_300=($frames -eq 300); duration_10s=([Math]::Abs($duration - 10.0) -le 0.02); size_matches=([int64]$probe.format.size -eq $file.Length) }
+  render_elapsed_s = $renderResult.elapsed_s
+  render_process_tree_peak_working_set_bytes = $renderResult.process_tree_peak_working_set_bytes
+  render_process_samples = $renderResult.process_samples
+  memory_measurement = 'WMI WorkingSetSize soma da árvore do processo; amostragem a cada 250 ms'
 }
-$logDirectory = Join-Path $PSScriptRoot '..\logs'
-New-Item -ItemType Directory -Force -Path $logDirectory | Out-Null
-$safeName = [IO.Path]::GetFileNameWithoutExtension($OutputFile) -replace '[^A-Za-z0-9-]', '-'
-$logPath = Join-Path $logDirectory "remotion-$safeName.json"
-$jsonResult = $result | ConvertTo-Json -Depth 5 -Compress
-Set-Content -LiteralPath $logPath -Value $jsonResult -Encoding utf8
-Write-Output $jsonResult
+$logName='cd01-remotion-probe-' + [Guid]::NewGuid().ToString('N')
+$logRelative=Save-QualificationLog -Name $logName -Value $evidence
+$evidence | Add-Member -NotePropertyName evidence_log -NotePropertyValue $logRelative
+$evidence | ConvertTo-Json -Depth 12 -Compress

@@ -44,3 +44,11 @@
 - Repo/branch e base lidos diretamente via GitHub CLI e checkout.
 - Antes de publicar evidências, comparar a base e os hashes novamente. Se houver mudança inesperada, marcar STALE e parar.
 - Artefatos grandes e binários ficam fora do Git; relatórios públicos usam caminhos relativos ou “local-only”, nunca o caminho do usuário.
+
+## Refresh de Source Check e Context Lock — CD-01 (2026-11-25)
+
+- PR #11 foi relida diretamente: OPEN, draft, base `main`=`c2bb0211adaf953c12f75d18be343be03cce7e93`, head de origem `nds/core-wo-001`=`49097c6eac92709a53f82a5e4e117144c0a13c19`. Clone e branch estavam limpos antes da correção deste CD-01. `origin/main` ainda apontava ao SHA-base; sem alteração canônica após PF-01.
+- Comentário de auditoria **#7174370671** da PR foi lido integralmente. F01 cobre path traversal/reparse/sobrescrita, variáveis do shell e timeout/árvore; F02 licenças Remotion e proveniência Kokoro por voz; F03 ffprobe real, hash de entrada/saída TTS-ASR, timestamps e resumo RAM; F04 reprodução por locks e instalação sem downloads/reinstalação desnecessária.
+- `AGENTS.md`, `PROMPT-CODEX.md`, `work-orders/NDS-CORE-WO-001.md`, `docs/19-governance.md`, `docs/11-decisions.md`, `docs/03-scope.md`, `docs/10-definition-of-done.md`, `docs/04-architecture.md`, `docs/02-requirements.md`, `docs/05-security.md`, `docs/06-test-benchmark.md`, `docs/16-sources-licenses.md` e `docs/12-checkpoint.md` foram abertos/lidos diretamente no HEAD da branch de origem. As impressões SHA-256 críticas coincidem com o quadro da base canônica acima; conteúdo/arquivos canônicos não foram modificados neste CD-01.
+- Skills consultadas: EAS Source Check, EAS Work Order e EAS Evidence Bundle; router EAS do workspace. Especialistas não receberam authority adicional e não foram usados subagentes.
+- A revisão foi restrita ao comentário #7174370671 e aos arquivos de qualificação/evidência que implementam ou demonstram F01–F04. Nenhum conteúdo privado, token, caminho pessoal ou dado de conta foi copiado para o bundle.
