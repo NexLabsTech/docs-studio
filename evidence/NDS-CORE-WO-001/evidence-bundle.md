@@ -7,8 +7,9 @@
 - Repositório: `NexLabsTech/docs-studio`; branch: `nds/core-wo-001`; PR draft #11: [NDS-CORE-WO-001](https://github.com/NexLabsTech/docs-studio/pull/11).
 - Base confirmada: `main` = `c2bb0211adaf953c12f75d18be343be03cce7e93`, merge da PR #10. PF-01 permanece APPROVED; não repetida.
 - Head de origem/CD-01: `49097c6eac92709a53f82a5e4e117144c0a13c19`. Context Lock revalidado; veja `context-lock.md` e hashes SHA-256 da fonte.
+- Commit corretivo inicial: `29197dcd40ba8f8facbc371d9e274d27ae74152c`; workflow Documentation CI run [45711071934](https://github.com/NexLabsTech/docs-studio/actions/runs/45711071934) terminou SUCCESS nesse SHA exato. Os checks Socket preexistentes também passaram.
 - Escopo desta atualização: somente correções F01–F04 do comentário de auditoria #7174370671, preservando a arquitetura e evidências anteriores ainda válidas. Código de produto e arquivos canônicos não foram alterados.
-- PR continua draft; o SHA final e CI real desse exato HEAD estão disponíveis na [aba Checks da PR](https://github.com/NexLabsTech/docs-studio/pull/11/checks). O resultado precisa corresponder ao HEAD atual; o run antigo `45696205047` em `40ddb1e` é histórico e não é aceitação do HEAD final.
+- PR continua draft. Para o estado posterior deste bundle, confira o SHA atual e CI real na [aba Checks da PR](https://github.com/NexLabsTech/docs-studio/pull/11/checks); o auditor deve confirmar que o run final corresponde ao HEAD exibido. O run antigo `45696205047` em `40ddb1e` é histórico.
 
 ## Context Lock e escopo
 
@@ -28,7 +29,7 @@ As alterações Git permanecem em `.gitignore` e `evidence/NDS-CORE-WO-001/`; ne
 | AC06 | PASS | Nenhum entitlement ImageGen comprovado sem custo adicional; API não chamada. Fixture sintética PNG cobre importação. |
 | AC07 | PASS com limite | `benchmarks.md` compara RAM pela mesma soma WMI; TTS foi maior que Remotion. Tempos, RAM, tamanhos e hashes do CD-01 documentados. Amostragem é medida observada; o valor FFmpeg com uma amostra é somente limite inferior. |
 | AC08 | PASS com risco explicitado | Zero custo adicional, lockfiles, origem/integrity, scripts lifecycle desativados, isolamento/rollback e licenças em `license-cost-security.md`. Direitos comerciais da voz Kokoro permanecem bloqueados; alternativa apenas proposta, não adotada. |
-| AC09 | GATE DINÂMICO | PR #11 draft, push e checks são consultáveis no link de Checks. Só considerar PASS quando o workflow real concluir no SHA final idêntico ao HEAD atual da PR; o status é lido após o push final. Sem merge, bypass ou promoção. |
+| AC09 | PASS em `29197dc`; validar HEAD corrente no link | GitHub Actions `Documentation CI` run `45711071934` passou exatamente em `29197dcd40ba8f8facbc371d9e274d27ae74152c`; checks Socket preexistentes passaram. A [aba Checks da PR](https://github.com/NexLabsTech/docs-studio/pull/11/checks) é a fonte do HEAD posterior deste bundle. Sem merge, bypass ou promoção. |
 | AC10 | EVIDÊNCIA COMPLETA; revisão pendente | Bundle pt-BR, findings F01–F04, logs, benchmarks e Checkpoint Delta proposto. Risco legal MEDIUM Kokoro é explícito; auditor independente ainda deve decidir APPROVED/CORRECTION REQUIRED/BLOCKED. |
 
 ## F01–F04 e validações
@@ -54,7 +55,7 @@ As alterações Git permanecem em `.gitignore` e `evidence/NDS-CORE-WO-001/`; ne
 - Contexto de cada subprocesso é limpo; variáveis adicionais seguem allowlist. O teste prova segredo sentinel do pai não herdado e TEMP/TMP/USERPROFILE/APPDATA do chamador inalterados.
 - ImageGen não foi chamado. FFmpeg GPL e eSpeak NG GPL não serão redistribuídos sem revisão das obrigações. H.264/patentes permanecem fora do uso local qualificado.
 - Kokoro `af_heart`: questão de licença/proveniência comercial MEDIUM, gate explícito, sem substituir arquitetura unilateralmente. Coqui VITS LJSpeech é somente candidato sem instalação/aceite.
-- `git diff --check`, validação documental, testes afetados, push e CI exato ainda serão reportados na PR. CI em SHA antigo não vale como CI do HEAD final.
+- `git diff --check`, validação documental, testes afetados e push passaram; Documentation CI e checks Socket passaram no commit corretivo `29197dc`. O último SHA e checks dinâmicos devem ser conferidos na PR após a atualização deste bundle. CI em SHA antigo não vale como CI de um HEAD posterior.
 
 ## Checkpoint Delta e decisão
 
