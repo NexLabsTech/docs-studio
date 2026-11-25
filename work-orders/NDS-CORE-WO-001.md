@@ -1,5 +1,5 @@
 # NDS-CORE-WO-001 — Source Pack & Local Qualification
-Status: PF-01 READY FOR ADMINISTRATIVE HANDOFF; LOCAL QUALIFICATION BLOCKED UNTIL BOOTSTRAP MERGED | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
+Status: PF-01 APPROVED; LOCAL QUALIFICATION READY ONLY AFTER VERIFIED BOOTSTRAP MERGE | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
 ## OBJECTIVE
 Establish a versioned canonical baseline and qualify the actual Windows environment and zero-additional-cost toolchain before implementing the product. Deliver reproducible evidence and a proposed checkpoint delta; stop for independent audit.
 ## CONTEXT
