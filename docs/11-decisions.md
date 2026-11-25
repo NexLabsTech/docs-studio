@@ -17,3 +17,4 @@ States: APPROVED product direction (user approval 2026-11-25), PROPOSED implemen
 | D013 | PROPOSED | Post-MVP official YouTube upload/publishing, owner approval required to change D002/D008; see #8 and docs/18. No live upload or OAuth setup authorized. |
 | D014 | APPROVED (repository destination only) | Owner created NexLabsTech/docs-studio and requested organization there on 2026-11-25. Connector verified public main and admin/push permissions. CI entitlement and local paths in D011 remain unqualified. |
 | D015 | PROPOSED | SemVer release plan, repository-wide software license selection pending owner; do not publish executable release before gates. |
+| D016 | PROPOSED | Public standard-runner documentary CI and main ruleset recipe, no bypass; solo owner zero required human GitHub approvals plus independent engineering audit. Actual enforcement and CI success pending; docs/19. |

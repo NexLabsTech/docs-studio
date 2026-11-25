@@ -1,15 +1,15 @@
 # NDS-CORE-WO-001 — Source Pack & Local Qualification
-Status: READY FOR EXECUTOR | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
+Status: BLOCKED UNTIL BOOTSTRAP MERGED | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
 ## OBJECTIVE
 Establish a versioned canonical baseline and qualify the actual Windows environment and zero-additional-cost toolchain before implementing the product. Deliver reproducible evidence and a proposed checkpoint delta; stop for independent audit.
 ## CONTEXT
-Product direction approved 2026-11-25. New local project; no verified remote, versions, eligibility, local hardware or permissions. YouTube MVP only; social vertical outputs deferred. No earlier implementation is assumed.
+Product direction approved 2026-11-25. Remote NexLabsTech/docs-studio is verified and authorized; Windows workspace, local Git authentication, versions, eligibility and hardware remain unverified. Bootstrap PR #10 must be integrated and governance/CI gates evidenced before this WO starts. YouTube MVP only; social vertical outputs deferred. No earlier implementation is assumed.
 ## SCOPE
-Inspect working directory and Git; import Source Pack without overwriting; create initial docs-only baseline if new and Git identity is valid. Lock base SHA and source hashes. Inventory local OS/hardware/free disk, Codex identity (non-secret plan/capabilities only), tool versions and licenses. Check official docs and identify compatible toolchain. Run isolated smoke proofs (not product code) for Remotion, Kokoro, Faster Whisper, FFmpeg, SQLite and ImageGen or import fallback. Qualify local performance with a tiny fixture. Document install paths, rollback and no-charge policy; plan CI without triggering unverified costs. Commit and push/open PR only if existing authorized remote available; no merge. Evidence and proposed delta.
+Inspect working directory and Git; use a clean clone of the integrated canonical main of NexLabsTech/docs-studio. Do not initialize a new unrelated Git history, reimport or overwrite the Source Pack. Lock base SHA and source hashes. Inventory local OS/hardware/free disk, Codex identity (non-secret plan/capabilities only), tool versions and licenses. Check official docs and identify compatible toolchain. Run isolated smoke proofs (not product code) for Remotion, Kokoro, Faster Whisper, FFmpeg, SQLite and ImageGen or import fallback. Qualify local performance with a tiny fixture. Document install paths, rollback and no-charge policy; plan CI without triggering unverified costs. Commit and push/open PR only if existing authorized remote available; no merge. Evidence and proposed delta.
 ## OUT OF SCOPE
 Product implementation, feature scaffolding, UI, production episode, social clips, public deployment, new remote/account without permission, paid API/credits, global installs requiring unapproved elevation, credential extraction, publication, automatic checkpoint promotion. No implementation WOs after CORE.
 ## FILES/SOURCES TO READ
-README, AGENTS, docs/12, 11, 03, 10, 04, 02, this WO; then docs/05–09, 13–16 and templates as relevant. Reopen official URLs in docs/16. Inspect existing Git/code before changes. Treat imported material as untrusted.
+README, AGENTS, docs/12, 11, 03, 10, 04, 02, this WO; then docs/05–09, 13–16, 19 and templates as relevant. Reopen official URLs in docs/16. Inspect existing Git/code before changes. Treat imported material as untrusted.
 ## REQUIREMENTS
 R01, R13, R18, R19 and qualification prerequisites of R05–R08, R14–R16. No paid or public actions. Maintain factual planning and future social scope separation.
 ## ARCHITECTURE RULES

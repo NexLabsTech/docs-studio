@@ -37,6 +37,7 @@ Clone this repository into a new workspace. Read [checkpoint](docs/12-checkpoint
 | [Sources and licensing](docs/16-sources-licenses.md) | References and gates |
 | [Release plan](docs/17-release-plan.md) | SemVer and release criteria |
 | [YouTube integration proposal](docs/18-youtube-integration-proposal.md) | Future, gated |
+| [Governance](docs/19-governance.md) | CI and branch protection gates |
 
 Source hierarchy: checkpoint → decisions → scope → DoD → architecture → requirements → other relevant sources. Git/code/tests prevail over claims of implementation; approved decisions cannot be silently overwritten. Conflicts = STALE/BLOCKED.
 

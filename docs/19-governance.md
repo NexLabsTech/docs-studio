@@ -1,0 +1,16 @@
+# GitHub governance — NDS-BOOTSTRAP-001/CD-01
+Status: workflow configured in candidate branch; live CI, branch enforcement and final integration remain BLOCKED until read-back. Public repo NexLabsTech/docs-studio only.
+## Verified eligibility (2026-11-25)
+Public repository and owner admin permission from connector. GitHub documentation confirms standard hosted runners are free for public repos and free public rulesets exist:
+- https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+- https://docs.github.com/en/actions/concepts/billing-and-usage
+- https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets
+No larger/paid runner, storage artifact, cache, secret or third-party subscription. Workflow uses standard ubuntu-latest, 5-minute timeout, read-only permission, no token in Git checkout, public repository guard. Do not change visibility or enable paid services; if visibility changes, reassess before running CI.
+## Read-back and blockers
+At original HEAD 688fbd65aaa4c488640ef146a9fea5405e04d89d: no workflows/statuses returned; rulesets GET returned []; branch protection GET 403 Resource not accessible by integration; Actions permissions endpoint unsupported. PR comment retry returned 403 At least one email address must be verified. Profile email null is not proof by itself. Owner must verify email via https://github.com/settings/emails. Do not bypass permissions.
+## Candidate enforcement
+The recipe [main-ruleset.json](../.github/governance/main-ruleset.json) is not active merely because committed. After a successful genuine docs-validation check, inspect existing repository rules and protection via authorized GitHub UI or official authenticated gh CLI. Confirm no conflicting rule and zero cost; import recipe under Settings > Rules > Rulesets or use official REST POST only if no existing matching rule. Do not duplicate or overwrite existing policy. Require PR, squash only, linear history, block deletion and force push, resolved threads, required docs-validation, no bypass actors. Zero required GitHub human approvals for single-owner workflow is a proposed technical setting; independent engineering audit remains mandatory, never self-approve. Owner has authorized governance; do not remove stronger existing controls. Read back active ruleset ID, target, conditions, enforcement, exact status context and bypass list; check legacy branch protection and effective rules too. If email or API permissions block, stop and record.
+## Validation
+Run python scripts/validate_docs.py --self-test and python scripts/validate_docs.py from clean checkout with Python >=3.9. Standard-library checks required tracked sources, WO sections, IDs and README relative links; not proof of semantics, licenses, secrets or runtime. CI validates exact GitHub event SHA (PR merge ref or main commit); preserve run URL/job/conclusion and verify association with current PR HEAD. A skipped, absent or failed check is NOT PASS. No CI or rule bypass to merge.
+## Next gate
+After governance read-back, CI success on current HEAD, audit and checkpoint delta, squash merge #10 with expected HEAD. Then verify main SHA and only then unlock CORE #1. No Windows qualification or application code here.
