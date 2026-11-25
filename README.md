@@ -14,7 +14,7 @@ NDS is a single-user Windows studio for original English-language Mega Engineeri
 - Instagram/TikTok vertical editions deferred. YouTube OAuth/upload is a separate proposed post-MVP feature, not approved for implementation.
 
 ## Start here
-Clone this repository into a new workspace. Read [checkpoint](docs/12-checkpoint.md), [decisions](docs/11-decisions.md), [scope](docs/03-scope.md), [DoD](docs/10-definition-of-done.md), [architecture](docs/04-architecture.md), [requirements](docs/02-requirements.md), then [AGENTS.md](AGENTS.md). Follow [PROMPT-CODEX.md](PROMPT-CODEX.md) for [NDS-CORE-WO-001](work-orders/NDS-CORE-WO-001.md) **only after bootstrap integration**. No application installation command exists yet.
+Clone this repository into a new workspace. Read [checkpoint](docs/12-checkpoint.md), [decisions](docs/11-decisions.md), [scope](docs/03-scope.md), [DoD](docs/10-definition-of-done.md), [architecture](docs/04-architecture.md), [requirements](docs/02-requirements.md), then [AGENTS.md](AGENTS.md). Follow [PROMPT-CODEX.md](PROMPT-CODEX.md) for [NDS-CORE-WO-001](work-orders/NDS-CORE-WO-001.md) starting with its authorized administrative preflight (PF-01) on PR #10; local qualification begins only after bootstrap integration. No application installation command exists yet.
 
 ## Documentation
 | Source | Purpose |

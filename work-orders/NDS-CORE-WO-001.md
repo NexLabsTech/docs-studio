@@ -1,10 +1,11 @@
 # NDS-CORE-WO-001 — Source Pack & Local Qualification
-Status: BLOCKED UNTIL BOOTSTRAP MERGED | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
+Status: PF-01 READY FOR ADMINISTRATIVE HANDOFF; LOCAL QUALIFICATION BLOCKED UNTIL BOOTSTRAP MERGED | Risk: STANDARD (ELEVATED for installs and subprocesses) | Branch: nds/core-wo-001 | Correction: NDS-CORE-WO-001/CD-nn.
 ## OBJECTIVE
 Establish a versioned canonical baseline and qualify the actual Windows environment and zero-additional-cost toolchain before implementing the product. Deliver reproducible evidence and a proposed checkpoint delta; stop for independent audit.
 ## CONTEXT
-Product direction approved 2026-11-25. Remote NexLabsTech/docs-studio is verified and authorized; Windows workspace, local Git authentication, versions, eligibility and hardware remain unverified. Bootstrap PR #10 must be integrated and governance/CI gates evidenced before this WO starts. YouTube MVP only; social vertical outputs deferred. No earlier implementation is assumed.
+Product direction approved 2026-11-25. Remote NexLabsTech/docs-studio is verified and authorized; Windows workspace, local Git authentication, versions, eligibility and hardware remain unverified. D017 permits PF-01 to handle remaining administrative bootstrap tasks on PR #10 as NDS-BOOTSTRAP-001/CD-02; PR #10 must be integrated and governance/CI gates evidenced before local qualification starts. YouTube MVP only; social vertical outputs deferred. No earlier implementation is assumed.
 ## SCOPE
+PF-01 administrative entry only: follow docs/19 and PROMPT-CODEX phase 0, same bootstrap PR, audit evidence and STOP. No local qualification until separate independent approval and integration.
 Inspect working directory and Git; use a clean clone of the integrated canonical main of NexLabsTech/docs-studio. Do not initialize a new unrelated Git history, reimport or overwrite the Source Pack. Lock base SHA and source hashes. Inventory local OS/hardware/free disk, Codex identity (non-secret plan/capabilities only), tool versions and licenses. Check official docs and identify compatible toolchain. Run isolated smoke proofs (not product code) for Remotion, Kokoro, Faster Whisper, FFmpeg, SQLite and ImageGen or import fallback. Qualify local performance with a tiny fixture. Document install paths, rollback and no-charge policy; plan CI without triggering unverified costs. Commit and push/open PR only if existing authorized remote available; no merge. Evidence and proposed delta.
 ## OUT OF SCOPE
 Product implementation, feature scaffolding, UI, production episode, social clips, public deployment, new remote/account without permission, paid API/credits, global installs requiring unapproved elevation, credential extraction, publication, automatic checkpoint promotion. No implementation WOs after CORE.
@@ -37,4 +38,5 @@ Versioned Source Pack and docs-only base; qualification report, dependency/licen
 ## REVIEW FORMAT
 Português brasileiro: objective/scope; base/head SHA, branch/PR; Context Lock status; AC01–AC10 table with evidence references; exact test outcomes; licensing/cost/security; benchmark table; changes; issues corrected; residual risks; gate status; proposed checkpoint delta; recommended auditor verdict (not independent approval). Classify findings CRITICAL/HIGH/MEDIUM/LOW. Explicitly identify assumptions and missing data.
 ## STOP CONDITION
+PF-01 stops at bootstrap evidence submission for independent audit; no self-approval or merge. Resume local qualification only after actual integrated main and fresh Context Lock.
 Stop after submitting evidence for audit, or BLOCKED/STALE if evidence/authorization cannot be obtained. Do not start NDS-MEDIA-WO-002, merge, deploy, produce public video or promote canonical checkpoint. Auditor alone determines APPROVED / CORRECTION REQUIRED / BLOCKED and next increment.
