@@ -41,6 +41,7 @@
 - Leitura da proteção legada em GET /branches/main/protection retornou HTTP 404 Branch not protected. A proteção efetiva da main é o ruleset ativo acima.
 - Leitura prévia de rulesets, com includes_parents=true, retornou [] antes da criação; nenhuma regra existente foi substituída nem duplicada.
 - Custo: [GitHub-hosted runners](https://docs.github.com/en/actions/reference/runners/github-hosted-runners) e [billing de Actions](https://docs.github.com/en/actions/concepts/billing-and-usage) documentam runners padrão gratuitos em repositórios públicos; [rulesets disponíveis](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-rulesets/available-rules-for-rulesets) documenta rulesets públicos no plano gratuito. O repositório foi verificado como público. Nenhum runner maior, cache, artefato, assinatura ou plano pago foi habilitado.
+- A PR também mostrou os checks Socket Security: Project Report e Pull Request Alerts. Este trabalho não instalou nem alterou essa integração. A [página oficial de preços](https://socket.dev/pricing) lista o plano Free a US$ 0 por assento/mês e repositórios públicos ilimitados; a [FAQ oficial](https://docs.socket.dev/docs/faq) diz que Socket é gratuito para repositórios open source. Isso sustenta elegibilidade sem custo adicional para este repositório público. O plano/fatura da conta Socket não foi inspecionado.
 
 ## Validações e comandos executados
 
