@@ -1,0 +1,14 @@
+{
+  "name": "nds-core-wo-001-remotion-smoke",
+  "private": true,
+  "description": "Isolated synthetic qualification fixture; not product code.",
+  "scripts": {
+    "render:smoke": "remotion render src/index.jsx nds-core-smoke"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.547",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.547"
+  }
+}

@@ -31,3 +31,5 @@ models/
 *.safetensors
 *.onnx
 *.log
+
+evidence/NDS-CORE-WO-001/qualification/.runtime/
