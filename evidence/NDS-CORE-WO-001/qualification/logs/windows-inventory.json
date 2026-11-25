@@ -1,0 +1,53 @@
+{
+  "collected_date": "2026-11-25",
+  "os": {
+    "caption": "Microsoft Windows 11 Home Single Language",
+    "version": "10.0.26200",
+    "build": "26200",
+    "architecture": "64 bits"
+  },
+  "cpu": {
+    "name": "AMD Ryzen 5 2500U with Radeon Vega Mobile Gfx  ",
+    "cores": 4,
+    "logical_processors": 8,
+    "max_clock_mhz": 2000
+  },
+  "physical_memory_gib": 22.9,
+  "gpus": [
+    {
+      "name": "Parsec Virtual Display Adapter",
+      "adapter_ram_bytes": null
+    },
+    {
+      "name": "AMD Radeon(TM) Vega 8 Graphics",
+      "adapter_ram_bytes": 1073741824
+    },
+    {
+      "name": "Radeon 535 Series",
+      "adapter_ram_bytes": 2147483648
+    }
+  ],
+  "c_drive": {
+    "size_gib": 222.45,
+    "free_gib": 30.98
+  },
+  "tools": {
+    "python": "Python 3.12.10",
+    "node": "v26.4.0",
+    "npm": "11.17.0",
+    "git": "git version 2.55.0.windows.3",
+    "codex": "codex-cli 0.172.0",
+    "sqlite_version": "3.49.1",
+    "sqlite_cli_present": false,
+    "ffmpeg": "ffmpeg version 9.0.2-full_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "ffmpeg_sha256": "589E50B766D251AFDF181DD664D40BD94407E200B019989FD7468C7D118A28D0",
+    "ffprobe_sha256": "02264DFA4F56BAAA31E443ECE8AA16D397F6B008200E7FD184D22B9009E75FD3",
+    "ffmpeg_gpl_enabled": true,
+    "ffmpeg_libx264_enabled": true
+  },
+  "codex_local_config": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "max"
+  },
+  "privacy": "User name, home path, machine identifiers and credentials are excluded."
+}
